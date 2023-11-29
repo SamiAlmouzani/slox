@@ -1,0 +1,6 @@
+var sami = 9
+var sabr = 8.1
+
+for(i = 0; i < 9; i + 1)
+// random comment
+print("hello" guys)
