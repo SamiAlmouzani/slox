@@ -1,0 +1,7 @@
+/*
+
+This is an terminated comment
+
+*/
+
+var sami = 9

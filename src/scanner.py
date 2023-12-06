@@ -29,27 +29,7 @@ class Scanner:
         "var": TokenType.VAR,
         "while": TokenType.WHILE,
     }
-    '''
-  static {
-    keywords = new HashMap<>();
-    keywords.put("and",    AND);
-    keywords.put("class",  CLASS);
-    keywords.put("else",   ELSE);
-    keywords.put("false",  FALSE);
-    keywords.put("for",    FOR);
-    keywords.put("fun",    FUN);
-    keywords.put("if",     IF);
-    keywords.put("nil",    NIL);
-    keywords.put("or",     OR);
-    keywords.put("print",  PRINT);
-    keywords.put("return", RETURN);
-    keywords.put("super",  SUPER);
-    keywords.put("this",   THIS);
-    keywords.put("true",   TRUE);
-    keywords.put("var",    VAR);
-    keywords.put("while",  WHILE);
-  }
-    '''
+
     def __init__(self, source: str) -> None:
         self.source = source
 
@@ -99,6 +79,19 @@ class Scanner:
                 '''A comment goes until the end of the line.'''
                 while (self.peek() != "\n") and (not self.is_at_end()):
                     self.advance()
+            elif self.match("*"):
+                '''A multi-line comment goes until closing */''' 
+                comment_ended: bool = False
+                while not comment_ended:
+                    if self.peek() == "*" and self.peek_next() == "/":
+                        comment_ended = True
+                        '''Consume both the * and /'''
+                        self.advance()
+                        self.advance()
+                    elif not self.is_at_end():
+                        self.advance()
+                    else:
+                        Logger.error(Logger(), self.line, "Unterminated Comment")
             else:
                 self.add_token(TokenType.SLASH)
         elif c == " " or c == "\r" or c == "\t":
@@ -185,9 +178,8 @@ class Scanner:
         return c >= "0" and c <= "9" 
 
     def advance(self) -> str:
-        temp = self.current
         self.current += 1
-        return self.source[temp]
+        return self.source[self.current - 1]
 
     def add_token(self, type: TokenType) -> None:
         self.add_token_helper(type, None)
