@@ -4,7 +4,7 @@ from slox import Slox
 if __name__ == "__main__":
     prog = Slox()
     if len(sys.argv) > 2:
-        print("Usage lox [script]")
+        sys.stderr("Usage lox [script]")
         sys.exit()
     elif len(sys.argv) == 2:
         print("run_file mode")
