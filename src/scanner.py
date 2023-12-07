@@ -91,6 +91,7 @@ class Scanner:
                     elif not self.is_at_end():
                         self.advance()
                     else:
+                        comment_ended = True
                         Logger.error(Logger(), self.line, "Unterminated Comment")
             else:
                 self.add_token(TokenType.SLASH)
