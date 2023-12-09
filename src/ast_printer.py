@@ -36,7 +36,8 @@ class AstPrinter(Visitor):
         return out_str
 
 
-# main code
+# testing code
+'''
 expression: Expr = Binary(
     Unary(
         Token(TokenType.MINUS, "-", None, 1),
@@ -48,3 +49,4 @@ expression: Expr = Binary(
     )
 )
 print(AstPrinter().print(expression))
+'''
