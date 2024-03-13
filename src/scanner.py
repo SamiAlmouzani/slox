@@ -4,7 +4,7 @@ from logger import Logger
 
 class Scanner:
 
-    tokens: list[tokens] = []
+    tokens: list[Token] = []
 
     start: int = 0
     current: int = 0
@@ -32,7 +32,7 @@ class Scanner:
     def __init__(self, source: str) -> None:
         self.source = source
 
-    def scan_tokens(self) -> list[tokens]:
+    def scan_tokens(self) -> list[Token]:
         while not self.is_at_end():
             self.start = self.current
             self.scan_token()
