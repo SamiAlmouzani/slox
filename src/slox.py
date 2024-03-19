@@ -2,6 +2,9 @@ import sys
 from scanner import Scanner
 from typing import List
 from tokens import Token
+from Parser import Parser
+from expr import Expr
+from ast_printer import AstPrinter
 
 class Slox:
 
@@ -9,9 +12,13 @@ class Slox:
 
     def run(self, source: str) -> None:
         scanner: Scanner = Scanner(source)
-        tokens: List[Token] = scanner.scan_tokens()
-        for token in tokens:
-            print(token)
+        toks: List[Token] = scanner.scan_tokens()
+        parser: Parser = Parser(toks)        
+        expr: Expr = parser.parse()
+
+        if self.had_error: return
+
+        print(AstPrinter().print(expr))
 
     def run_file(self, path: str) -> None:
         with open(path, "rb") as f:
@@ -25,6 +32,7 @@ class Slox:
         while True:
             print("> ", end="")
             line: str = str(input())
+            print("this got called")
             if line is None:
                 break
             self.run(line)
