@@ -15,7 +15,7 @@ class Parser:
     def parse(self) -> Expr:
         try:
             return self.expression()
-        except RuntimeError:
+        except self.ParseError:
             return None
             
     def expression(self) -> Expr:
@@ -113,7 +113,7 @@ class Parser:
         return self.tokens[self.current - 1]
     
     def error(self, token: Token, message: str) -> ParseError:
-        Logger.error(token, message)
+        Logger().error_token(token, message)
         return self.ParseError()
     
     def synchronize(self) -> None:

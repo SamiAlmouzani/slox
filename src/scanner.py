@@ -92,7 +92,7 @@ class Scanner:
                         self.advance()
                     else:
                         comment_ended = True
-                        Logger.error(Logger(), self.line, "Unterminated Comment")
+                        Logger().error_int(self.line, "Unterminated Comment")
             else:
                 self.add_token(TokenType.SLASH)
         elif c == " " or c == "\r" or c == "\t":
@@ -107,7 +107,7 @@ class Scanner:
             elif self.is_alpha(c):
                 self.identifier()
             else:
-                Logger.error(Logger(), self.line, "Unexpected Character.")
+                Logger().error_int(self.line, "Unexpected Character.")
 
     def identifier(self) -> None:
         while self.is_alpha_numeric(self.peek()):
@@ -140,7 +140,7 @@ class Scanner:
             self.advance()
         
         if self.is_at_end():
-            Logger.error(self.line, "Unterminated string.")
+            Logger().error_int(self.line, "Unterminated string.")
             return
 
         '''the closing ".''' 
